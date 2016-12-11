@@ -32,22 +32,6 @@ definitions:
           type: string
           description: Solution of the text-based CAPTCHA
 
-  create_user:
-    type: object
-    required: [user, host, key, token, answer]
-    properties:
-      user: {$ref: "#/definitions/username"}
-      host: {$ref: "#/definitions/hostname"}
-      key:
-        type: string
-        description: "User's SSH key"
-      token:
-        type: string
-        description: Opaque challenge descriptor
-      answer:
-        type: string
-        description: Solution to the CAPTCHA
-
 
 links:
   - description: Request a one-time CAPTCHA
@@ -63,7 +47,15 @@ links:
   - description: Create a new user
     href: /user/create
     method: POST
-    schema: {$ref: "#/definitions/create_user"}
+    schema:
+      type: object
+      required: [user, host]
+      properties:
+        user: {$ref: "#/definitions/username"}
+        host: {$ref: "#/definitions/hostname"}
+      allOf:
+        - $ref: "#/definitions/captcha/response"
+        - $ref: "data_user.yml"
 
   - description: Request server infos
     href: /server/stats
