@@ -7,18 +7,46 @@ definitions:
     type: string
     pattern: "^([a-z0-9]+\.)+hashbang\.sh$"
 
+  captcha:
+    description: CAPTCHA descriptor
+    type: object
+    required: [challenge, token]
+    properties:
+      challenge:
+        type: string
+        description: Human-readable challenge
+      token:
+        type: string
+        description: Opaque challenge descriptor
+
   create_user:
     type: object
-    required: [user, host, key]
+    required: [user, host, key, token, answer]
     properties:
       user: {$ref: "#/definitions/username"}
       host: {$ref: "#/definitions/hostname"}
       key:
         type: string
         description: "User's SSH key"
+      token:
+        type: string
+        description: Opaque challenge descriptor
+      answer:
+        type: string
+        description: Solution to the CAPTCHA
 
 
 links:
+  - description: Request a one-time CAPTCHA
+    href: /captcha
+    method: POST
+    targetSchema: {$ref: "#/definitions/captcha"}
+    schema:
+      type: object
+      required: [user]
+      properties:
+        user: {$ref: "#/definitions/username"}
+
   - description: Create a new user
     href: /user/create
     method: POST
