@@ -9,8 +9,8 @@ properties:
     description: SSH keys for the shell servers
   name:
     type: string
-    description: "User's name"
+    description: "User's name (GECOS)"
   shell:
     type: string
-    description: "User's shell"
+    description: "User's login shell"
   required: [ssh_keys, shell]
