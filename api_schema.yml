@@ -1,0 +1,44 @@
+definitions:
+  username:
+    type: string
+    pattern: "^[a-z][a-z0-9]{0,30}$"
+
+  hostname:
+    type: string
+    pattern: "^([a-z0-9]+\.)+hashbang\.sh$"
+
+  create_user:
+    type: object
+    required: [user, host, key]
+    properties:
+      user: {$ref: "#/definitions/username"}
+      host: {$ref: "#/definitions/hostname"}
+      key:
+        type: string
+        description: "User's SSH key"
+
+
+links:
+  - description: Create a new user
+    href: /user/create
+    method: POST
+    schema: {$ref: "#/definitions/create_user"}
+
+  - description: Request server infos
+    href: /server/stats
+    method: GET
+    targetSchema:
+      type: object
+      patternProperties:
+        "^([a-z0-9]+\.)+hashbang\.sh$":
+          type: object
+          required: [currentUsers, maxUsers]
+          properties:
+            currentUsers:
+              type: integer
+              minimum: 0
+            maxUsers:
+              type: integer
+              minimum: 0
+          # Include the host_data schema
+          allOf: [{$ref: "data_host.yaml"}]
