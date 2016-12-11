@@ -8,16 +8,29 @@ definitions:
     pattern: "^([a-z0-9]+\.)+hashbang\.sh$"
 
   captcha:
-    description: CAPTCHA descriptor
-    type: object
-    required: [challenge, token]
-    properties:
-      challenge:
-        type: string
-        description: Human-readable challenge
-      token:
-        type: string
-        description: Opaque challenge descriptor
+    challenge:
+      description: CAPTCHA descriptor
+      type: object
+      required: [challenge, token]
+      properties:
+        challenge:
+          type: string
+          description: Human-readable challenge
+        token:
+          type: string
+          description: Opaque challenge descriptor
+
+    response:
+      description: CAPTCHA solution
+      type: object
+      required: [token, answer]
+      properties:
+        token:
+          type: string
+          description: Opaque challenge descriptor
+        answer:
+          type: string
+          description: Solution of the text-based CAPTCHA
 
   create_user:
     type: object
@@ -40,7 +53,7 @@ links:
   - description: Request a one-time CAPTCHA
     href: /captcha
     method: POST
-    targetSchema: {$ref: "#/definitions/captcha"}
+    targetSchema: {$ref: "#/definitions/captcha/challenge"}
     schema:
       type: object
       required: [user]
