@@ -13,4 +13,5 @@ properties:
   shell:
     type: string
     description: "User's login shell"
-  required: [ssh_keys, shell]
+
+required: [ssh_keys, shell]
