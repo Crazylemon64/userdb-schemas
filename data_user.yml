@@ -4,7 +4,7 @@ type: object
 properties:
   ssh_keys:
     type: array
-    items: {type: string}
+    items: {items: $ref: '#/definitions/ssh_key'}
     uniqueItems: True
     description: SSH keys for the shell servers
   name:
@@ -13,5 +13,12 @@ properties:
   shell:
     type: string
     description: "User's login shell"
+    
+definitions:
+  ssh_key:
+    type: string
+    description: A valid rsa, dsa, or ecdsa key compatible with sshd.
+    patternProperties:
+      '^{ssh-{rsa,dss,ed25519},ecdsa-sha2-nistp{256,384,521}} [a-zA-Z0-9/+=]{8,4000}( .*)?$':
 
 required: [ssh_keys, shell]
