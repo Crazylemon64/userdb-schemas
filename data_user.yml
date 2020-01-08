@@ -18,6 +18,6 @@ definitions:
   ssh_key:
     type: string
     description: A valid rsa, dsa, or ecdsa key compatible with sshd.
-    pattern: '^(ssh-(rsa|dss|ed25519)|ecdsa-sha2-nistp(256|384|521)) [a-zA-Z0-9/+=]{8,}( .*)?[^\n]$'
+    pattern: '^(.+(,.+)* )?(ssh-(rsa|dss|ed25519)|ecdsa-sha2-nistp(256|384|521)) [a-zA-Z0-9/+=]{8,}( .*)?[^\n]$'
 
 required: [ssh_keys, shell]
